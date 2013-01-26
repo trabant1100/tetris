@@ -22,7 +22,11 @@ Tetris::Tetris(HINSTANCE hInstance, int nCmdMode)
 	ShowWindow(hWindow, this->nCmdMode);
 
 	MSG msg;
-	Game game;
+	lpBoard = new Board();
+	lpGame = new Game(lpBoard);
+
+	uTimer = SetTimer(hWindow, TETRIS_TIMER, 1000, NULL);
+
 	while(GetMessage(&msg, hWindow, 0, 0) > 0)
 	{
 		DispatchMessage(&msg);
@@ -82,7 +86,24 @@ ATOM Tetris::RegisterWindowClass()
 
 LRESULT CALLBACK Tetris::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	switch(uMsg)
+	{
+	case WM_TIMER:
+		if(wParam == TETRIS_TIMER)
+		{
+			lpGame->Step();
+			return 0;
+		}
+		break;
 
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+	case WM_DESTROY:
+		KillTimer(hWindow, uTimer);
+		delete lpBoard;
+		delete lpGame;
+		PostQuitMessage(WM_QUIT);
+		break;
+	default:
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+	}
 }
 

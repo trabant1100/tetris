@@ -43,3 +43,16 @@ void Board::DeleteLine(int line)
 		}
 	}
 }
+
+bool Board::IsPosibleMovement(int xPos, int yPos, Piece *lpPiece)
+{
+	for(int x = 0; x < xBlocks; x ++)
+	{
+		for(int y = 0; y < yBlocks; y ++)
+		{
+
+		}
+	}
+
+	return true;
+}

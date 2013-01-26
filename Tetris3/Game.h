@@ -2,10 +2,11 @@
 
 #include "Board.h"
 
+
 class Game
 {
 public:
-	Game();
+	Game(Board *lpBoard);
 	~Game();
 	void Step();
 
