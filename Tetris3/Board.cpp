@@ -35,7 +35,7 @@ void Board::DeletePossibleLines()
 
 void Board::DeleteLine(int line)
 {
-	for(int y = line - 1; y --; y >= 0)
+	for(int y = line - 1; y >= 0; y --)
 	{
 		for(int x = 0; x < xBlocks; x ++)
 		{
@@ -44,13 +44,38 @@ void Board::DeleteLine(int line)
 	}
 }
 
-bool Board::IsPosibleMovement(int xPos, int yPos, Piece *lpPiece)
+void Board::StorePiece(int xPos, int yPos, Piece *lpPiece)
 {
-	for(int x = 0; x < xBlocks; x ++)
+	for(int x = xPos, xPiece = 0; x < xPos + PIECE_WIDTH; x ++, xPiece ++)
 	{
-		for(int y = 0; y < yBlocks; y ++)
+		for(int y = yPos, yPiece = 0; y < yPos + PIECE_WIDTH; y ++, yPiece++)
 		{
+			if(lpPiece->GetBlockType(xPiece, yPiece) != 0)
+			{
+				blocks[x][y] = BLOCK_FILLED; 
+			}
+		}
+	}
+}
 
+bool Board::IsFreeBlock(int xPos, int yPos)
+{
+	return blocks[xPos][yPos] == BLOCK_FREE;
+}
+
+bool Board::IsPosibleMovement(int xPos, int yPos, Piece *lpPiece)
+{	
+	for(int x = xPos, xPiece = 0; x < xPos + PIECE_WIDTH; x ++, xPiece ++)
+	{
+		for(int y = yPos, yPiece = 0; y < yPos + PIECE_HEIGHT; y ++, yPiece ++)
+		{
+			if(lpPiece->GetBlockType(xPiece, yPiece) != 0)
+			{
+				if(x >= xBlocks || y >= yBlocks || blocks[x][y] != 0)
+				{
+					return false;
+				}
+			}
 		}
 	}
 

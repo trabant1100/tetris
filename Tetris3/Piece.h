@@ -1,20 +1,26 @@
 #pragma once
 
-#define PIECE_TYPE_COUNT 1
-#define PIECE_WIDTH 3
-#define PIECE_HEIGHT 3
+#define PIECE_TYPE_COUNT 2
+#define PIECE_ROTATION_COUNT 2
+#define PIECE_WIDTH 5
+#define PIECE_HEIGHT 5
 
-enum PieceType { PIECE_TYPE_1 };
+enum PieceColor { RED, GREEN, BLUE };
 
 class Piece
 {
+
 public:
-	Piece(PieceType type);
+	Piece(int type, PieceColor color);
 	~Piece(void);
 	int GetBlockType(int x, int y);
-	
+	void Rotate();
+	PieceColor GetColor();
+
 private:
-	PieceType type;
-	int const static shapes[PIECE_TYPE_COUNT][PIECE_WIDTH][PIECE_HEIGHT];
+	int type;
+	int rotation;
+	PieceColor color;
+	int const static shapes[PIECE_TYPE_COUNT][PIECE_ROTATION_COUNT][PIECE_WIDTH][PIECE_HEIGHT];
 };
 
