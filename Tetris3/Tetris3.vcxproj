@@ -54,6 +54,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d2d1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,7 +76,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Direct2DGfx.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GdiGfx.h" />
     <ClInclude Include="Gfx.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Tetris.h" />
@@ -83,7 +86,9 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Direct2DGfx.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GdiGfx.cpp" />
     <ClCompile Include="Gfx.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="Tetris.cpp" />

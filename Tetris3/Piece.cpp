@@ -14,7 +14,7 @@ Piece::~Piece(void)
 
 int Piece::GetBlockType(int x, int y)
 {
-	return shapes[type][rotation][x][y];
+	return shapes[type][rotation][y][x];
 }
 
 void Piece::Rotate()
@@ -61,6 +61,22 @@ int const Piece::shapes[PIECE_TYPE_COUNT][PIECE_ROTATION_COUNT][PIECE_WIDTH][PIE
 			{0, 0, 0, 0, 0},
 			{0, 0, 1, 1, 0},
 			{0, 0, 1, 1, 0},
+			{0, 0, 0, 0, 0}
+		}
+	},
+	{ // |-
+		{
+			{0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0},
+			{0, 0, 1, 1, 0},
+			{0, 0, 1, 0, 0},
+			{0, 0, 0, 0, 0}
+		},
+		{
+			{0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0},
+			{0, 1, 1, 1, 0},
+			{0, 0, 1, 0, 0},
 			{0, 0, 0, 0, 0}
 		}
 	}

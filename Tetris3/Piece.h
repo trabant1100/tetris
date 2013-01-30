@@ -1,11 +1,11 @@
 #pragma once
 
-#define PIECE_TYPE_COUNT 2
+#define PIECE_TYPE_COUNT 3
 #define PIECE_ROTATION_COUNT 2
 #define PIECE_WIDTH 5
 #define PIECE_HEIGHT 5
 
-enum PieceColor { RED, GREEN, BLUE };
+enum PieceColor { RED, GREEN, BLUE, MAX };
 
 class Piece
 {

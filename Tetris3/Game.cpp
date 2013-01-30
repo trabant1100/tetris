@@ -6,11 +6,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-Game::Game(Board *lpBoard)
+Game::Game(Gfx *lpGfx, Board *lpBoard)
 {
 	srand((unsigned)time(NULL));
+	
+	this->lpGfx = lpGfx;
 	this->lpBoard = lpBoard;
-
+	
 	lpPiece = NULL;
 	CreateNewPiece();
 }
@@ -91,7 +93,7 @@ void Game::DrawPiece(int xPos, int yPos, Piece *lpPiece)
 		{
 			if(lpPiece->GetBlockType(x, y) != 0)
 			{
-				Gfx::DrawPiece((xPos+x) * PIXEL_SIZE, (yPos+y) * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, lpPiece->GetColor());
+				lpGfx->DrawPiece((xPos+x) * PIXEL_SIZE, (yPos+y) * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, lpPiece->GetColor());
 			}
 		}
 	}
@@ -99,14 +101,14 @@ void Game::DrawPiece(int xPos, int yPos, Piece *lpPiece)
 
 void Game::DrawBoard()
 {
-	Gfx::DrawRectangle(0, 0, Board::xBlocks * PIXEL_SIZE, Board::yBlocks * PIXEL_SIZE);
+	lpGfx->DrawRectangle(0, 0, Board::xBlocks * PIXEL_SIZE, Board::yBlocks * PIXEL_SIZE);
 	for(int x = 0; x < Board::xBlocks; x ++)
 	{
 		for(int y = 0; y < Board::yBlocks; y ++)
 		{
 			if(!lpBoard->IsFreeBlock(x, y))
 			{
-				Gfx::DrawPiece(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, BLUE);
+				lpGfx->DrawPiece(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, BLUE);
 			}
 		}
 	}

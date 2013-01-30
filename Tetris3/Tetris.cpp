@@ -23,11 +23,13 @@ Tetris::Tetris(HINSTANCE hInstance, int nCmdMode)
 	ShowWindow(hWindow, this->nCmdMode);
 
 	MSG msg;
+	gfx = new Direct2DGfx(hWindow);
+	//gfx = new GdiGfx();
 	lpBoard = new Board();
-	lpGame = new Game(lpBoard);
+	lpGame = new Game(gfx, lpBoard);
 
-	uTimer = SetTimer(hWindow, TETRIS_TIMER, 500, NULL);
-	uGfxTimer = SetTimer(hWindow, TETRIS_GFX_TIMER, 1000 / 60, NULL);
+	uTimer = SetTimer(hWindow, TETRIS_TIMER, 200, NULL);
+	uGfxTimer = SetTimer(hWindow, TETRIS_GFX_TIMER, 100 / 60, NULL);
 
 	while(GetMessage(&msg, hWindow, 0, 0) > 0)
 	{
@@ -109,6 +111,7 @@ LRESULT CALLBACK Tetris::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		KillTimer(hWindow, uGfxTimer);
 		delete lpBoard;
 		delete lpGame;
+		delete gfx;
 		PostQuitMessage(WM_QUIT);
 		break;
 
@@ -128,18 +131,32 @@ LRESULT CALLBACK Tetris::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 			lpGame->Move(DOWN);
 			break;
 		}
-		return 0;
+		break;
 
 	case WM_PAINT:
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
-			Gfx::hdc = hdc;
+			
+			gfx->BeginPaint(hdc);
 			lpGame->DrawScene();
+			gfx->EndPaint();
+			
 			EndPaint(hWnd, &ps);
 		}
-		return 0;		
+		break;		
+
+	case WM_ERASEBKGND:
+		return (LPARAM)1;
+
+	default:
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+
+	return 0;
 }
 
+void MsgError(LPCWSTR lpText)
+{
+	MessageBox(NULL, lpText, TEXT("FAIL"), MB_ICONERROR | MB_OK);
+}
