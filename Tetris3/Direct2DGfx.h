@@ -14,6 +14,7 @@ private:
 	ID2D1Factory *pD2DFactory;
 	ID2D1HwndRenderTarget *pRT;
 	ID2D1SolidColorBrush **pBrushes;
+	D2D1_RECT_F ConvertRect(D2D1_RECT_U *rect);
 
 public:
 	Direct2DGfx(HWND hWindow);
