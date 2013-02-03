@@ -7,7 +7,7 @@ class Direct2DGfx :
 	public Gfx
 {
 private:
-	static const D2D1::ColorF::Enum colors[MAX];
+	static const D2D1::ColorF::Enum colors[PIECE_COLOR_MAX];
 	RECT rc;
 	HWND hWindow;
 	
@@ -22,6 +22,6 @@ public:
 	void BeginPaint(HDC hdc);
 	void EndPaint();
 	void DrawRectangle(int x, int y, int width, int height);
-	void DrawPiece(int x, int y, int width, int height, PieceColor color);
+	void DrawPiece(int x, int y, int width, int height, int color);
 };
 

@@ -15,8 +15,8 @@ Direct2DGfx::Direct2DGfx(HWND hWindow)
 	if(pD2DFactory->CreateHwndRenderTarget(D2D1::RenderTargetProperties(), hwndRTP, &pRT) != S_OK)
 		MsgError(TEXT("Cannot create hwnd render target"));
 
-	pBrushes = new ID2D1SolidColorBrush*[MAX];
-	for(int i = 0; i < MAX; i ++)
+	pBrushes = new ID2D1SolidColorBrush*[PIECE_COLOR_MAX];
+	for(int i = 0; i < PIECE_COLOR_MAX; i ++)
 	{
 		if(pRT->CreateSolidColorBrush(D2D1::ColorF(colors[i]), &(pBrushes[i])) != S_OK)
 			MsgError(TEXT("Cannot create brush"));
@@ -28,7 +28,7 @@ Direct2DGfx::~Direct2DGfx()
 	pRT->Release();
 	pD2DFactory->Release();
 
-	for(int i = 0; i < MAX; i ++)
+	for(int i = 0; i < PIECE_COLOR_MAX; i ++)
 	{
 		pBrushes[i]->Release();
 	}
@@ -52,16 +52,17 @@ void Direct2DGfx::EndPaint()
 void Direct2DGfx::DrawRectangle(int x, int y, int width, int height)
 {
 	D2D1_RECT_F rect = ConvertRect(&D2D1::RectU(x, y, x + width, y + height));
-	pRT->DrawRectangle(&rect, pBrushes[BLUE]);
+	pRT->DrawRectangle(&rect, pBrushes[0]);
 }
 
-void Direct2DGfx::DrawPiece(int x, int y, int width, int height, PieceColor color)
+void Direct2DGfx::DrawPiece(int x, int y, int width, int height, int color)
 {
 	D2D1_RECT_F rect = ConvertRect(&D2D1::RectU(x, y, x + width, y + height));
 	pRT->FillRectangle(&rect, pBrushes[color]);
 }
 
-const D2D1::ColorF::Enum Direct2DGfx::colors[MAX] = {D2D1::ColorF::Red, D2D1::ColorF::Green, D2D1::ColorF::Blue};
+const D2D1::ColorF::Enum Direct2DGfx::colors[PIECE_COLOR_MAX] = 
+{D2D1::ColorF::Black, D2D1::ColorF::Red, D2D1::ColorF::Green, D2D1::ColorF::Blue};
 
 D2D1_RECT_F Direct2DGfx::ConvertRect(D2D1_RECT_U *rect)
 {

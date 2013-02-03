@@ -17,13 +17,14 @@ public:
 	void Move(GameMove move);
 
 private:
-
-	unsigned int xPos, yPos;
+	int xPos, yPos;
 	Board *lpBoard; 
 	Piece *lpPiece;
+	Piece *lpNextPiece;
 	Gfx *lpGfx;
 
-	void CreateNewPiece();
+	void CreateNewPiece(Piece *&lpNewPiece);
+	void CreateNewPiecePosition(const Piece *lpPiece, int *xPos, int *yPos);
 	void DrawPiece(int xPos, int yPos, Piece *lpPiece);
 	void DrawBoard();
 };

@@ -11,6 +11,6 @@ public:
 	void BeginPaint(HDC hdc);
 	void EndPaint();
 	void DrawRectangle(int x, int y, int width, int height);
-	void DrawPiece(int x, int y, int width, int height, PieceColor color);
+	void DrawPiece(int x, int y, int width, int height, int color);
 };
 

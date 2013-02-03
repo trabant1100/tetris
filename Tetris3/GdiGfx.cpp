@@ -15,18 +15,18 @@ void GdiGfx::DrawRectangle(int x, int y, int width, int height)
 	Rectangle(hdc, x, y, x + width, y + height);
 }
 
-void GdiGfx::DrawPiece(int x, int y, int width, int height, PieceColor color)
+void GdiGfx::DrawPiece(int x, int y, int width, int height, int color)
 {
 	DWORD rgbColor;
 	switch(color)
 	{
-	case RED:
+	case PIECE_COLOR_RED:
 		rgbColor = RGB(255, 0, 0);
 		break;
-	case GREEN:
+	case PIECE_COLOR_GREEN:
 		rgbColor = RGB(0, 255, 0);
 		break;
-	case BLUE:
+	case PIECE_COLOR_BLUE:
 		rgbColor = RGB(0, 0, 255);
 		break;
 	}

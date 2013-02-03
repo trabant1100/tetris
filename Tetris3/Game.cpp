@@ -13,35 +13,49 @@ Game::Game(Gfx *lpGfx, Board *lpBoard)
 	this->lpGfx = lpGfx;
 	this->lpBoard = lpBoard;
 	
-	lpPiece = NULL;
-	CreateNewPiece();
+	CreateNewPiece(lpPiece);
+	CreateNewPiecePosition(lpPiece, &xPos, &yPos);
+
+	CreateNewPiece(lpNextPiece);
 }
 
 
 Game::~Game()
 {
-	delete lpPiece;
+	if(lpPiece) {
+		delete lpPiece;
+		lpPiece = NULL;
+	}
+	if(lpNextPiece) {
+		delete lpNextPiece;
+		lpPiece = NULL;
+	}
 }
 
 void Game::Step()
 {
-	lpBoard->DeletePossibleLines();
-	
-	if(lpBoard->IsPosibleMovement(xPos, yPos + 1, lpPiece))
+	if(lpBoard->IsPossibleMovement(xPos, yPos + 1, lpPiece))
 	{
 		yPos ++;
 	}
 	else
 	{
 		lpBoard->StorePiece(xPos, yPos, lpPiece);
-		CreateNewPiece();
+		delete lpPiece;
+
+		lpPiece = lpNextPiece;
+
+		CreateNewPiece(lpNextPiece);
+		CreateNewPiecePosition(lpNextPiece, &xPos, &yPos);
 	}
+	lpBoard->DeletePossibleLines();
 }
 
 void Game::DrawScene()
 {
 	DrawBoard();
 	DrawPiece(xPos, yPos, lpPiece);
+	DrawPiece(Board::xBlocks, 0, lpNextPiece);
 }
 
 void Game::Move(GameMove move)
@@ -49,40 +63,45 @@ void Game::Move(GameMove move)
 	switch(move)
 	{
 	case LEFT:
-		if(lpBoard->IsPosibleMovement(xPos - 1, yPos, lpPiece))
+		if(lpBoard->IsPossibleMovement(xPos - 1, yPos, lpPiece))
 		{
 			xPos --;
 		}
 		break;
 	case RIGHT:
-		if(lpBoard->IsPosibleMovement(xPos + 1, yPos, lpPiece))
+		if(lpBoard->IsPossibleMovement(xPos + 1, yPos, lpPiece))
 		{
 			xPos ++;
 		}
 		break;
 	case ROTATE:
-		lpPiece->Rotate();
+		if(lpBoard->IsPossibleRotation(xPos, yPos, lpPiece))
+		{
+			lpPiece->Rotate();
+		}
 		break;
 	case DOWN:
-		while(lpBoard->IsPosibleMovement(xPos, yPos + 1, lpPiece))
+		while(lpBoard->IsPossibleMovement(xPos, yPos + 1, lpPiece))
 		{
 			yPos ++;
 		}
-		lpBoard->DeletePossibleLines();
+		break;
 	}
+	lpBoard->DeletePossibleLines();
 }
 
-void Game::CreateNewPiece()
+void Game::CreateNewPiece(Piece *&lpNewPiece)
 {
-	if(lpPiece)
-		delete lpPiece;
+	int color = rand() % PIECE_COLOR_COUNT + 1;
 
-	PieceColor color = static_cast<PieceColor> (rand() % 3);
+	lpNewPiece = new Piece(rand() % PIECE_TYPE_COUNT, color);
+	//lpNewPiece = new Piece(1, 1);
+}
 
-	lpPiece = new Piece(rand() % PIECE_TYPE_COUNT, color);
-	//lpPiece = new Piece(1);
-	xPos = rand() % (Board::xBlocks - PIECE_WIDTH);
-	yPos = 0;
+void Game::CreateNewPiecePosition(const Piece *lpPiece, int *xPos, int *yPos)
+{
+	*xPos = rand() % (Board::xBlocks - PIECE_WIDTH);
+	*yPos = 0;
 }
 
 void Game::DrawPiece(int xPos, int yPos, Piece *lpPiece)
@@ -106,9 +125,10 @@ void Game::DrawBoard()
 	{
 		for(int y = 0; y < Board::yBlocks; y ++)
 		{
-			if(!lpBoard->IsFreeBlock(x, y))
+			int color = lpBoard->GetBlockColor(x, y);
+			if(color)
 			{
-				lpGfx->DrawPiece(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, BLUE);
+				lpGfx->DrawPiece(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, color);
 			}
 		}
 	}

@@ -12,9 +12,11 @@ public:
 	Board();
 	~Board();
 	void DeletePossibleLines();
-	bool IsPosibleMovement(int xPos, int yPos, Piece *lpPiece);
+	bool IsPossibleMovement(int xPos, int yPos, Piece *lpPiece);
+	bool IsPossibleRotation(int xPos, int yPos, Piece *lpPiece);
 	void StorePiece(int xPos, int yPos, Piece *lpPiece);
 	bool IsFreeBlock(int xPos, int yPos);
+	int GetBlockColor(int xPos, int yPos);
 
 private:
 	int blocks[xBlocks][yBlocks];

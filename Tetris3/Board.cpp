@@ -52,7 +52,7 @@ void Board::StorePiece(int xPos, int yPos, Piece *lpPiece)
 		{
 			if(lpPiece->GetBlockType(xPiece, yPiece) != 0)
 			{
-				blocks[x][y] = BLOCK_FILLED; 
+				blocks[x][y] = lpPiece->GetColor(); 
 			}
 		}
 	}
@@ -63,7 +63,12 @@ bool Board::IsFreeBlock(int xPos, int yPos)
 	return blocks[xPos][yPos] == BLOCK_FREE;
 }
 
-bool Board::IsPosibleMovement(int xPos, int yPos, Piece *lpPiece)
+int Board::GetBlockColor(int xPos, int yPos)
+{
+	return blocks[xPos][yPos];
+}
+
+bool Board::IsPossibleMovement(int xPos, int yPos, Piece *lpPiece)
 {	
 	for(int x = xPos, xPiece = 0; x < xPos + PIECE_WIDTH; x ++, xPiece ++)
 	{
@@ -71,7 +76,7 @@ bool Board::IsPosibleMovement(int xPos, int yPos, Piece *lpPiece)
 		{
 			if(lpPiece->GetBlockType(xPiece, yPiece) != 0)
 			{
-				if(x >= xBlocks || y >= yBlocks || blocks[x][y] != 0)
+				if(x < 0 || x >= xBlocks || y < 0 || y >= yBlocks || blocks[x][y] != 0)
 				{
 					return false;
 				}
@@ -80,4 +85,12 @@ bool Board::IsPosibleMovement(int xPos, int yPos, Piece *lpPiece)
 	}
 
 	return true;
+}
+
+bool Board::IsPossibleRotation(int xPos, int yPos, Piece *lpPiece)
+{
+	Piece rotatedPiece(*lpPiece);
+	rotatedPiece.Rotate();
+
+	return IsPossibleMovement(xPos, yPos, &rotatedPiece);
 }
