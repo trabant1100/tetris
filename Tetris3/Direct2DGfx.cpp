@@ -1,6 +1,7 @@
 #include "Direct2DGfx.h"
 #include "Tetris.h"
 
+#include <crtdbg.h>
 
 Direct2DGfx::Direct2DGfx(HWND hWindow)
 {
@@ -57,6 +58,8 @@ void Direct2DGfx::DrawRectangle(int x, int y, int width, int height)
 
 void Direct2DGfx::DrawPiece(int x, int y, int width, int height, int color)
 {
+	_ASSERT(x >= 0);
+	_ASSERT(y >= 0);
 	D2D1_RECT_F rect = ConvertRect(&D2D1::RectU(x, y, x + width, y + height));
 	pRT->FillRectangle(&rect, pBrushes[color]);
 }

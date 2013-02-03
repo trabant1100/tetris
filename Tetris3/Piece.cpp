@@ -34,6 +34,11 @@ int Piece::GetColor()
 	return color;
 }
 
+PIECE_ORIGIN Piece::GetOrigin()
+{
+	return origins[type][rotation];
+}
+
 bool Piece::originsCreated = false;
 
 PIECE_ORIGIN Piece::origins[PIECE_TYPE_COUNT][PIECE_ROTATION_COUNT] = {0};

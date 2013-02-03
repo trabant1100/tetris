@@ -7,6 +7,8 @@
 #include "Board.h"
 #include "Piece.h"
 
+
+
 TEST(Board)
 {
 	Board board;
@@ -30,7 +32,9 @@ TEST(Board)
 TEST(Piece_origins)
 {
 	Piece piece(0, 1);
-	
+	PIECE_ORIGIN origin = piece.GetOrigin();
+	CHECK(origin.x == 2);
+	CHECK(origin.y == 1);
 }
 
 int _tmain(int argc, _TCHAR* argv[])

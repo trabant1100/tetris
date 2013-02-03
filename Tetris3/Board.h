@@ -17,6 +17,7 @@ public:
 	void StorePiece(int xPos, int yPos, Piece *lpPiece);
 	bool IsFreeBlock(int xPos, int yPos);
 	int GetBlockColor(int xPos, int yPos);
+	bool IsBlockInBoard(int xPos, int yPos);
 
 private:
 	int blocks[xBlocks][yBlocks];

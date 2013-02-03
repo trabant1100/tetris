@@ -18,14 +18,16 @@ public:
 
 private:
 	int xPos, yPos;
+	int xNextPos, yNextPos;
 	Board *lpBoard; 
 	Piece *lpPiece;
 	Piece *lpNextPiece;
 	Gfx *lpGfx;
 
 	void CreateNewPiece(Piece *&lpNewPiece);
-	void CreateNewPiecePosition(const Piece *lpPiece, int *xPos, int *yPos);
+	void CreateNewPiecePosition(Piece *lpPiece, int *xPos, int *yPos, bool bRandomize);
 	void DrawPiece(int xPos, int yPos, Piece *lpPiece);
+	void DrawNextPiece(int xPos, int yPos, Piece *lpNextPiece);
 	void DrawBoard();
 };
 

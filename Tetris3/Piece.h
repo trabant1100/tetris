@@ -19,14 +19,13 @@ struct PIECE_ORIGIN
 
 class Piece
 {
-	friend class TetrisTest;
-
 public:
 	Piece(int type, int color);
 	~Piece(void);
 	int GetBlockType(int x, int y);
 	void Rotate();
 	int GetColor();
+	PIECE_ORIGIN GetOrigin();
 
 private:
 	int type;

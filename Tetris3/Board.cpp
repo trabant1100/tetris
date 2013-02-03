@@ -68,6 +68,11 @@ int Board::GetBlockColor(int xPos, int yPos)
 	return blocks[xPos][yPos];
 }
 
+bool Board::IsBlockInBoard(int xPos, int yPos)
+{
+	return (xPos >= 0 && xPos < xBlocks && yPos >= 0 && yPos < yBlocks);
+}
+
 bool Board::IsPossibleMovement(int xPos, int yPos, Piece *lpPiece)
 {	
 	for(int x = xPos, xPiece = 0; x < xPos + PIECE_WIDTH; x ++, xPiece ++)

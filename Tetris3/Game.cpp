@@ -14,9 +14,12 @@ Game::Game(Gfx *lpGfx, Board *lpBoard)
 	this->lpBoard = lpBoard;
 	
 	CreateNewPiece(lpPiece);
-	CreateNewPiecePosition(lpPiece, &xPos, &yPos);
+	CreateNewPiecePosition(lpPiece, &xPos, &yPos, true);
 
 	CreateNewPiece(lpNextPiece);
+	CreateNewPiecePosition(lpNextPiece, &xNextPos, &yNextPos, false);
+	xNextPos += Board::xBlocks + 1;
+	yNextPos ++;
 }
 
 
@@ -41,12 +44,15 @@ void Game::Step()
 	else
 	{
 		lpBoard->StorePiece(xPos, yPos, lpPiece);
+		
 		delete lpPiece;
-
 		lpPiece = lpNextPiece;
+		CreateNewPiecePosition(lpPiece, &xPos, &yPos, true);
 
 		CreateNewPiece(lpNextPiece);
-		CreateNewPiecePosition(lpNextPiece, &xPos, &yPos);
+		CreateNewPiecePosition(lpNextPiece, &xNextPos, &yNextPos, false);
+		xNextPos += Board::xBlocks + 1;
+		yNextPos ++;
 	}
 	lpBoard->DeletePossibleLines();
 }
@@ -55,7 +61,7 @@ void Game::DrawScene()
 {
 	DrawBoard();
 	DrawPiece(xPos, yPos, lpPiece);
-	DrawPiece(Board::xBlocks, 0, lpNextPiece);
+	DrawNextPiece(xNextPos, yNextPos, lpNextPiece);
 }
 
 void Game::Move(GameMove move)
@@ -98,10 +104,12 @@ void Game::CreateNewPiece(Piece *&lpNewPiece)
 	//lpNewPiece = new Piece(1, 1);
 }
 
-void Game::CreateNewPiecePosition(const Piece *lpPiece, int *xPos, int *yPos)
+void Game::CreateNewPiecePosition(Piece *lpPiece, int *xPos, int *yPos, bool bRandomize)
 {
-	*xPos = rand() % (Board::xBlocks - PIECE_WIDTH);
-	*yPos = 0;
+	PIECE_ORIGIN origin = lpPiece->GetOrigin();
+	int xPosInit = bRandomize ? rand() % (Board::xBlocks - PIECE_WIDTH) : 0;
+	*xPos = xPosInit - origin.x;
+	*yPos = 0 - origin.y;
 }
 
 void Game::DrawPiece(int xPos, int yPos, Piece *lpPiece)
@@ -110,9 +118,23 @@ void Game::DrawPiece(int xPos, int yPos, Piece *lpPiece)
 	{
 		for(int y = 0; y < PIECE_WIDTH; y ++)
 		{
-			if(lpPiece->GetBlockType(x, y) != 0)
+			if(lpPiece->GetBlockType(x, y) != 0 && lpBoard->IsBlockInBoard(xPos + x, yPos + y))
 			{
 				lpGfx->DrawPiece((xPos+x) * PIXEL_SIZE, (yPos+y) * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, lpPiece->GetColor());
+			}
+		}
+	}
+}
+
+void Game::DrawNextPiece(int xPos, int yPos, Piece *lpNextPiece)
+{
+	for(int x = 0; x < PIECE_WIDTH; x ++)
+	{
+		for(int y = 0; y < PIECE_WIDTH; y ++)
+		{
+			if(lpNextPiece->GetBlockType(x, y) != 0 && (xPos + x) >= 0 && (yPos + y) >= 0)
+			{
+				lpGfx->DrawPiece((xPos+x) * PIXEL_SIZE, (yPos+y) * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE, lpNextPiece->GetColor());
 			}
 		}
 	}
