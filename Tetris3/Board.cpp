@@ -16,7 +16,7 @@ Board::~Board()
 {
 }
 
-void Board::DeletePossibleLines()
+int Board::DeletePossibleLines()
 {
 	for(int y = 0; y < yBlocks; y ++)
 	{
@@ -29,8 +29,13 @@ void Board::DeletePossibleLines()
 			}
 		}
 		if(deleteLine)
+		{
 			DeleteLine(y);
+			return 1;
+		}
 	}
+
+	return 0;
 }
 
 void Board::DeleteLine(int line)

@@ -20,6 +20,7 @@ Game::Game(Gfx *lpGfx, Board *lpBoard)
 	CreateNewPiecePosition(lpNextPiece, &xNextPos, &yNextPos, false);
 	xNextPos += Board::xBlocks + 1;
 	yNextPos ++;
+	deletedLines = 0;
 }
 
 
@@ -54,7 +55,7 @@ void Game::Step()
 		xNextPos += Board::xBlocks + 1;
 		yNextPos ++;
 	}
-	lpBoard->DeletePossibleLines();
+	deletedLines += lpBoard->DeletePossibleLines();
 }
 
 void Game::DrawScene()
@@ -62,6 +63,7 @@ void Game::DrawScene()
 	DrawBoard();
 	DrawPiece(xPos, yPos, lpPiece);
 	DrawNextPiece(xNextPos, yNextPos, lpNextPiece);
+	DrawScore();
 }
 
 void Game::Move(GameMove move)
@@ -85,6 +87,24 @@ void Game::Move(GameMove move)
 		{
 			lpPiece->Rotate();
 		}
+		else
+		{
+			for(int xDelta = 1; xDelta < PIECE_WIDTH; xDelta ++)
+			{
+				if(lpBoard->IsPossibleRotation(xPos + xDelta, yPos, lpPiece))
+				{
+					lpPiece->Rotate();
+					xPos += xDelta;
+					break;
+				}
+				else if(lpBoard->IsPossibleRotation(xPos - xDelta, yPos, lpPiece))
+				{
+					lpPiece->Rotate();
+					xPos -= xDelta;
+					break;
+				}
+			}
+		}
 		break;
 	case DOWN:
 		while(lpBoard->IsPossibleMovement(xPos, yPos + 1, lpPiece))
@@ -93,7 +113,7 @@ void Game::Move(GameMove move)
 		}
 		break;
 	}
-	lpBoard->DeletePossibleLines();
+	deletedLines += lpBoard->DeletePossibleLines();
 }
 
 void Game::CreateNewPiece(Piece *&lpNewPiece)
@@ -101,7 +121,7 @@ void Game::CreateNewPiece(Piece *&lpNewPiece)
 	int color = rand() % PIECE_COLOR_COUNT + 1;
 
 	lpNewPiece = new Piece(rand() % PIECE_TYPE_COUNT, color);
-	//lpNewPiece = new Piece(1, 1);
+	//lpNewPiece = new Piece(3, 1);
 }
 
 void Game::CreateNewPiecePosition(Piece *lpPiece, int *xPos, int *yPos, bool bRandomize)
@@ -154,4 +174,12 @@ void Game::DrawBoard()
 			}
 		}
 	}
+}
+
+void Game::DrawScore()
+{
+	int xPos = (Board::xBlocks + 1) * PIXEL_SIZE;
+	int yPos = (PIECE_HEIGHT + 2) * PIXEL_SIZE;
+		
+	lpGfx->DrawScore(xPos, yPos, deletedLines);
 }

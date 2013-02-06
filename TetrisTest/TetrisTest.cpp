@@ -23,22 +23,15 @@ TEST(Board)
 		board.IsPossibleMovement(-1, 0, &piece)
 		);
 
-	piece.Rotate();
+	/*piece.Rotate();
 	CHECK(
 		board.IsPossibleMovement(-3, 0, &piece) == false
-		);
-}
-
-TEST(Piece_origins)
-{
-	Piece piece(0, 1);
-	PIECE_ORIGIN origin = piece.GetOrigin();
-	CHECK(origin.x == 2);
-	CHECK(origin.y == 1);
+		);*/
 }
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	return UnitTest::RunAllTests();
+	return 0;
 }
 

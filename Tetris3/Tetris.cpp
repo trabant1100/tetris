@@ -28,7 +28,7 @@ Tetris::Tetris(HINSTANCE hInstance, int nCmdMode)
 	lpBoard = new Board();
 	lpGame = new Game(gfx, lpBoard);
 
-	uTimer = SetTimer(hWindow, TETRIS_TIMER, 700, NULL);
+	uTimer = SetTimer(hWindow, TETRIS_TIMER, 500, NULL);
 	uGfxTimer = SetTimer(hWindow, TETRIS_GFX_TIMER, 100 / 60, NULL);
 
 	while(GetMessage(&msg, hWindow, 0, 0) > 0)

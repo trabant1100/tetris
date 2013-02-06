@@ -1,7 +1,9 @@
 #include "Direct2DGfx.h"
 #include "Tetris.h"
 
+#include <stdio.h>
 #include <crtdbg.h>
+#include <cwchar>
 
 Direct2DGfx::Direct2DGfx(HWND hWindow)
 {
@@ -22,6 +24,21 @@ Direct2DGfx::Direct2DGfx(HWND hWindow)
 		if(pRT->CreateSolidColorBrush(D2D1::ColorF(colors[i]), &(pBrushes[i])) != S_OK)
 			MsgError(TEXT("Cannot create brush"));
 	}
+
+	if(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), 
+		reinterpret_cast<IUnknown **>(&pDWriteFactory)) != S_OK)
+	{
+		MsgError(TEXT("Cannot create DirectWrite factory"));
+	}
+
+	if(pDWriteFactory->CreateTextFormat(L"Jokerman", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL, 40, L"", &pDWriteTextFormat) != S_OK)
+	{
+		MsgError(TEXT("Cannot create DirectWrite text format"));
+	}
+
+	pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 }
 
 Direct2DGfx::~Direct2DGfx()
@@ -62,6 +79,16 @@ void Direct2DGfx::DrawPiece(int x, int y, int width, int height, int color)
 	_ASSERT(y >= 0);
 	D2D1_RECT_F rect = ConvertRect(&D2D1::RectU(x, y, x + width, y + height));
 	pRT->FillRectangle(&rect, pBrushes[color]);
+}
+
+void Direct2DGfx::DrawScore(int x, int y, int score)
+{
+	WCHAR lpszScore[20] = {0};
+	swprintf_s(lpszScore, L"%d", score);	
+
+	D2D1_RECT_F rect = ConvertRect(&D2D1::RectU(x, y, x + 50, y + 50));
+
+	pRT->DrawTextW(lpszScore, std::wcslen(lpszScore), pDWriteTextFormat, rect, pBrushes[0]);
 }
 
 const D2D1::ColorF::Enum Direct2DGfx::colors[PIECE_COLOR_MAX] = 

@@ -11,7 +11,7 @@ public:
 	static const unsigned int xBlocks = 10, yBlocks = 20;
 	Board();
 	~Board();
-	void DeletePossibleLines();
+	int DeletePossibleLines();
 	bool IsPossibleMovement(int xPos, int yPos, Piece *lpPiece);
 	bool IsPossibleRotation(int xPos, int yPos, Piece *lpPiece);
 	void StorePiece(int xPos, int yPos, Piece *lpPiece);

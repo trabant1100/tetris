@@ -19,6 +19,7 @@ public:
 private:
 	int xPos, yPos;
 	int xNextPos, yNextPos;
+	int deletedLines;
 	Board *lpBoard; 
 	Piece *lpPiece;
 	Piece *lpNextPiece;
@@ -29,5 +30,6 @@ private:
 	void DrawPiece(int xPos, int yPos, Piece *lpPiece);
 	void DrawNextPiece(int xPos, int yPos, Piece *lpNextPiece);
 	void DrawBoard();
+	void DrawScore();
 };
 
