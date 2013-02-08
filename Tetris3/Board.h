@@ -18,6 +18,7 @@ public:
 	bool IsFreeBlock(int xPos, int yPos);
 	int GetBlockColor(int xPos, int yPos);
 	bool IsBlockInBoard(int xPos, int yPos);
+	bool IsGameOver();
 
 private:
 	int blocks[xBlocks][yBlocks];

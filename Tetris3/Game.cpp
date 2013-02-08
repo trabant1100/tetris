@@ -116,6 +116,11 @@ void Game::Move(GameMove move)
 	deletedLines += lpBoard->DeletePossibleLines();
 }
 
+void Game::EndGame()
+{
+	//MessageBox(hWindow, TEXT("Koniec gry"), TEXT("Przegra³eœ!"), MB_OK | MB_ICONERROR);
+}
+
 void Game::CreateNewPiece(Piece *&lpNewPiece)
 {
 	int color = rand() % PIECE_COLOR_COUNT + 1;

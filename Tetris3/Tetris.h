@@ -9,6 +9,7 @@
 
 #define TETRIS_TIMER 1
 #define TETRIS_GFX_TIMER 2
+#define WM_TETRIS_GAME_OVER (WM_USER + 1)
 
 class Tetris
 {

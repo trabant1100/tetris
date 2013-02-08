@@ -15,6 +15,7 @@ public:
 	void Step();
 	void DrawScene();
 	void Move(GameMove move);
+	void EndGame();
 
 private:
 	int xPos, yPos;

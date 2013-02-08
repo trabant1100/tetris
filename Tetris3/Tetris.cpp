@@ -97,6 +97,10 @@ LRESULT CALLBACK Tetris::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		if(wParam == TETRIS_TIMER)
 		{
 			lpGame->Step();
+			if(lpBoard->IsGameOver())
+			{
+				SendMessage(hWnd, WM_TETRIS_GAME_OVER, NULL, NULL);
+			}
 			return 0;
 		} 
 		else if(wParam == TETRIS_GFX_TIMER)
@@ -106,9 +110,25 @@ LRESULT CALLBACK Tetris::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		}
 		break;
 
-	case WM_DESTROY:
+	case WM_TETRIS_GAME_OVER:
+		lpGame->EndGame();
 		KillTimer(hWindow, uTimer);
-		KillTimer(hWindow, uGfxTimer);
+		uTimer = NULL;
+		return 0;
+		break;
+
+	case WM_DESTROY:
+		if(uTimer)
+		{
+			KillTimer(hWindow, uTimer);
+			uTimer = NULL;
+		}
+		if(uGfxTimer)
+		{
+			KillTimer(hWindow, uGfxTimer);
+			uGfxTimer = NULL;
+		}
+		
 		delete lpBoard;
 		delete lpGame;
 		delete gfx;
