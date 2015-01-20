@@ -1,7 +1,6 @@
 #include "Piece.h"
 
 #include <stdio.h>
-#include <Windows.h>
 
 Piece::Piece(int type, int color)
 {

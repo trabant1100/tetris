@@ -1,13 +1,14 @@
 #include "GdiGfx.h"
+#include <assert.h>
 
-void GdiGfx::BeginPaint(HDC hdc)
+void GdiGfx::BeginPaint()
 {
-	this->hdc = hdc;
+	assert(hdc);
 }
 
 void GdiGfx::EndPaint()
 {
-	//hdc = NULL;
+	hdc = NULL;
 }
 
 void GdiGfx::DrawRectangle(int x, int y, int width, int height)

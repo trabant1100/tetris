@@ -53,9 +53,8 @@ Direct2DGfx::~Direct2DGfx()
 	delete[] pBrushes;
 }
 
-void Direct2DGfx::BeginPaint(HDC hdc)
+void Direct2DGfx::BeginPaint()
 {
-	this->hdc = hdc;
 	pRT->BeginDraw();
 	pRT->Clear(D2D1::ColorF(D2D1::ColorF::White));
 }

@@ -23,7 +23,7 @@ private:
 public:
 	Direct2DGfx(HWND hWindow);
 	~Direct2DGfx();
-	void BeginPaint(HDC hdc);
+	void BeginPaint();
 	void EndPaint();
 	void DrawRectangle(int x, int y, int width, int height);
 	void DrawPiece(int x, int y, int width, int height, int color);

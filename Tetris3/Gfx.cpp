@@ -1,8 +1,8 @@
 #include "Gfx.h"
 
-void Gfx::BeginPaint(HDC hdc)
+void Gfx::BeginPaint()
 {
-	this->hdc = hdc;
+	
 }
 
 void Gfx::EndPaint()

@@ -158,7 +158,7 @@ LRESULT CALLBACK Tetris::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 			
-			gfx->BeginPaint(hdc);
+			gfx->BeginPaint();
 			lpGame->DrawScene();
 			gfx->EndPaint();
 			

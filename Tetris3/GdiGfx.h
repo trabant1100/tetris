@@ -7,8 +7,10 @@
 
 class GdiGfx : public Gfx
 {
+private:
+	HDC hdc = NULL;
 public:
-	void BeginPaint(HDC hdc);
+	void BeginPaint();
 	void EndPaint();
 	void DrawRectangle(int x, int y, int width, int height);
 	void DrawPiece(int x, int y, int width, int height, int color);
