@@ -9,3 +9,8 @@ void Gfx::EndPaint()
 {
 	//this->hdc = NULL;
 }
+
+Gfx::~Gfx()
+{
+
+}

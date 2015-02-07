@@ -52,6 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\emscripten\emscripten\1.27.0\system\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -68,6 +69,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\emscripten\emscripten\1.27.0\system\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,16 +81,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Direct2DGfx.h" />
+    <ClInclude Include="Es2Camera.h" />
     <ClInclude Include="GdiGfx.h" />
     <ClInclude Include="Gfx.h" />
+    <ClInclude Include="ES2Gfx.h" />
     <ClInclude Include="Tetris.h" />
+    <ClInclude Include="TetrisEM.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Direct2DGfx.cpp" />
+    <ClCompile Include="Es2Camera.cpp" />
+    <ClCompile Include="Es2ShaderGfx.cpp" />
     <ClCompile Include="GdiGfx.cpp" />
     <ClCompile Include="Gfx.cpp" />
+    <ClCompile Include="Es2Gfx.cpp" />
     <ClCompile Include="Tetris.cpp" />
+    <ClCompile Include="TetrisEM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TetrisLogic\TetrisLogic.vcxproj">

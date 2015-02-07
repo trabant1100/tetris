@@ -27,6 +27,15 @@
     <ClInclude Include="Direct2DGfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TetrisEM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ES2Gfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Es2Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tetris.cpp">
@@ -42,6 +51,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DGfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TetrisEM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Es2Gfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Es2ShaderGfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Es2Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
